@@ -24,7 +24,7 @@ def generate_id_cards_from_excel(template_path, excel_file,y):
         return []
 
     # Set up font (provide a valid font file path)
-    font_path = "arial.ttf"  # Replace with a valid font file path on your system
+    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"  # Replace with a valid font file path on your system
     try:
         font = ImageFont.truetype(font_path, size=100)
     except Exception as e:
