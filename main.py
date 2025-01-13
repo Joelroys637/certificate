@@ -112,6 +112,4 @@ def main():
                 file_name="id_cards.zip",
                 mime="application/zip"
             )
-
-if __name__ == "__main__":
-    main()
+main()
