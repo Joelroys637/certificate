@@ -39,9 +39,9 @@ def generate_id_cards_from_excel(template_path, excel_file,y):
         return []
 
     # Check for required columns
-    if 'name' not in df.columns:
+    '''if 'name' not in df.columns:
         st.error("Excel file must contain a 'name' column.")
-        return []
+        return []'''
 
     # Generate ID cards
     id_cards = []
@@ -51,7 +51,7 @@ def generate_id_cards_from_excel(template_path, excel_file,y):
         draw = ImageDraw.Draw(card)
 
         # Calculate text width and center it
-        text = f"{student['name']}"
+        text = f"{student[name]}"
         text_bbox = draw.textbbox((0, 0), text, font=font)  # Get text bounding box
         text_width = text_bbox[2] - text_bbox[0]  # Width of the text
         center_x = (card.width - text_width) // 2  # Horizontally center the text
@@ -70,7 +70,7 @@ def generate_id_cards_from_excel(template_path, excel_file,y):
 # Streamlit app
 def main():
     st.title("Certificate Generator")
-
+    name=st.text_input("enter coloumn name:")
     # Upload template image
     template_file = st.file_uploader("Upload certificate Template (Image)", type=["png", "jpg", "jpeg"])
     excel_file = st.file_uploader("Upload Excel File (with 'name' column)", type=["xlsx"])
