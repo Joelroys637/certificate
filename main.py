@@ -39,9 +39,9 @@ def generate_id_cards_from_excel(template_path, excel_file,y):
         return []
 
     # Check for required columns
-    '''if 'name' not in df.columns:
+    if 'name' not in df.columns:
         st.error("Excel file must contain a 'name' column.")
-        return []'''
+        return []
 
     # Generate ID cards
     id_cards = []
