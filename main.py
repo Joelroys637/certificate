@@ -5,7 +5,7 @@ import zipfile
 from io import BytesIO
 
 
-def generate_id_cards_from_excel(template_path, excel_file, y, column_name):
+def generate_id_cards_from_excel(template_path, excel_file, y, column_name, text_size, text_color):
     # Load template image
     try:
         template = Image.open(template_path)
@@ -16,7 +16,7 @@ def generate_id_cards_from_excel(template_path, excel_file, y, column_name):
     # Load Font
     font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     try:
-        font = ImageFont.truetype(font_path, size=60)
+        font = ImageFont.truetype(font_path, size=text_size)  # ✅ Dynamic Font Size
     except Exception as e:
         st.error(f"Error loading font: {e}")
         return []
@@ -39,7 +39,7 @@ def generate_id_cards_from_excel(template_path, excel_file, y, column_name):
         card = template.copy()
         draw = ImageDraw.Draw(card)
 
-        text = str(student[column_name])  # ✅ FIXED ERROR
+        text = str(student[column_name])
 
         # Center text horizontally
         text_bbox = draw.textbbox((0, 0), text, font=font)
@@ -48,7 +48,7 @@ def generate_id_cards_from_excel(template_path, excel_file, y, column_name):
 
         try:
             text_y = int(y)
-            draw.text((center_x, text_y), text, fill="black", font=font)
+            draw.text((center_x, text_y), text, fill=text_color, font=font)  # ✅ Color Applied
             id_cards.append(card)
         except:
             st.error("Please enter only numbers for Y axis!")
@@ -71,6 +71,10 @@ def main():
 
     y = st.text_input("Enter the Y axis position (only number):")
 
+    # ✅ NEW FEATURES
+    text_size = st.slider("Select Text Size", min_value=20, max_value=150, value=60)
+    text_color = st.color_picker("Pick Text Color", "#000000")
+
     if template_file and excel_file and column_name and y:
         template_path = "uploaded_template.png"
 
@@ -78,7 +82,12 @@ def main():
             f.write(template_file.getvalue())
 
         id_cards = generate_id_cards_from_excel(
-            template_path, excel_file, y, column_name
+            template_path,
+            excel_file,
+            y,
+            column_name,
+            text_size,      # ✅ Added
+            text_color      # ✅ Added
         )
 
         if id_cards:
