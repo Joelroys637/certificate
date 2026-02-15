@@ -67,7 +67,7 @@ def main():
     excel_file = st.file_uploader("Upload Excel File", type=["xlsx"])
 
     st.write("Find your certificate coordinates here:")
-    st.write("https://pixspy.com/")
+    st.write("https://imageonline.io/find-coordinates-of-image/")
 
     y = st.text_input("Enter the Y axis position (only number):")
 
